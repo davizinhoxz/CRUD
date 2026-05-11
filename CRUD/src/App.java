@@ -201,13 +201,10 @@ public class App {
                         <tr>
 
                             <th>ID</th>
-
+                            <th>Nif</th>
                             <th>Nome</th>
-
                             <th>Email</th>
-
                             <th>Telefone</th>
-
                             <th>Ações</th>
 
                         </tr>
@@ -233,10 +230,12 @@ public class App {
                     String nome = rs.getString("nome");
                     String email = rs.getString("email");
                     String telefone = rs.getString("telefone");
+                    String nifx = rs.getString("nif");
 
 
                     html.append("<tr>");
                     html.append("<td>").append(id).append("</td>");
+                    html.append("<td>").append(nifx).append("</td>");
                     html.append("<td>").append(nome).append("</td>");
                     html.append("<td>").append(email).append("</td>");
                     html.append("<td>").append(telefone).append("</td>");
@@ -295,13 +294,9 @@ public class App {
                     <style>
 
                         body { font-family: Arial; }
-
                         form { width: 300px; }
-
                         input { width: 100%; padding: 8px; margin-bottom: 10px; }
-
                         button { padding: 8px 12px; }
-
                         a { text-decoration: none; }
 
                     </style>
@@ -332,6 +327,10 @@ public class App {
                     Telefone:
 
                     <input name='telefone'>
+
+                    Nif:
+
+                    <input name='nif'>
 
 
                     <button type='submit'>Guardar</button>
@@ -390,6 +389,8 @@ public class App {
 
                 String telefone = "";
 
+                String nif = "";
+
 
                 for (String p : params) {
 
@@ -411,6 +412,8 @@ public class App {
 
                             case "telefone": telefone = value; break;
 
+                            case "nif": nif = value; break;
+
                         }
 
                     }
@@ -427,7 +430,7 @@ public class App {
 
                 }
 
-                String sql = "INSERT INTO clientes(nome,email,telefone) VALUES (?,?,?)";
+                String sql = "INSERT INTO clientes(nome,email,telefone,nif) VALUES (?,?,?,?)";
 
                 PreparedStatement ps = con.prepareStatement(sql);
 
@@ -437,6 +440,8 @@ public class App {
                 ps.setString(2, email);
 
                 ps.setString(3, telefone);
+
+                ps.setString(4, nif);
 
 
                 ps.executeUpdate();
@@ -576,6 +581,8 @@ server.createContext("/editar", exchange -> {
 
         String telefone = rs.getString("telefone");
 
+        String nif = rs.getString("nif");
+
         html.append("""
 
             <html>
@@ -614,6 +621,8 @@ server.createContext("/editar", exchange -> {
         html.append("Email:<input name='email' value='").append(email).append("' required>");
 
         html.append("Telefone:<input name='telefone' value='").append(telefone).append("'>");
+
+        html.append("Nif:<input name='nif' value='").append(nif).append("'>");
 
         html.append("""
 
@@ -684,6 +693,8 @@ server.createContext("/atualizar", exchange -> {
 
         String telefone = "";
 
+        String nif = "";
+
         for (String p : params) {
 
             String[] kv = p.split("=");
@@ -704,6 +715,8 @@ server.createContext("/atualizar", exchange -> {
 
                     case "telefone": telefone = value; break;
 
+                    case "nif": nif = value; break;
+
                 }
 
             }
@@ -719,14 +732,15 @@ server.createContext("/atualizar", exchange -> {
             throw new Exception("Ligação à BD falhou!");
         }
 
-        String sql = "UPDATE clientes SET nome=?, email=?, telefone=? WHERE id=?";
+        String sql = "UPDATE clientes SET nome=?, email=?, telefone=?, nif=? WHERE id=?";
 
         PreparedStatement ps = con.prepareStatement(sql);
 
         ps.setString(1, nome);
         ps.setString(2, email);
         ps.setString(3, telefone);
-        ps.setInt(4, id);
+        ps.setString(4, nif);
+        ps.setInt(5, id);
 
         ps.executeUpdate();
 
