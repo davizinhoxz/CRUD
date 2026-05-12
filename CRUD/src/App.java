@@ -119,7 +119,7 @@ public class App {
 
                                     <p>Adicionar novo registo</p>
 
-                                    <a href="/novo">Criar</a>
+                                    <a href="/novocliente">Criar</a>
 
                                 </div>
 
@@ -142,7 +142,7 @@ public class App {
 
                                     <p>Adicionar novo registo</p>
 
-                                    <a href="/novo1">Criar</a>
+                                    <a href="/novoproduto">Criar</a>
 
                                 </div>
 
@@ -160,7 +160,7 @@ public class App {
 
         });
 
-        //// LISTA
+        //// LISTA CLIENTES
 
         server.createContext("/clientes", exchange -> {
 
@@ -189,7 +189,7 @@ public class App {
 
                         <h2>Lista de Clientes</h2>
 
-                        <a href='/novo'>+ Novo Cliente</a><br><br>
+                        <a href='/novocliente'>+ Novo Cliente</a><br><br>
 
 
                         <table>
@@ -206,7 +206,6 @@ public class App {
                             </tr>
 
                     """);
-                    
 
             Connection con = LigacaoBD.ligar();
 
@@ -235,7 +234,7 @@ public class App {
                     html.append("<td>").append(telefone).append("</td>");
 
                     html.append("<td>");
-                    html.append("<a href='/editar?id=").append(id).append("'>Editar</a>");
+                    html.append("<a href='/editarcliente?id=").append(id).append("'>Editar</a>");
                     html.append("<a href='/apagarcliente?id=").append(id)
                             .append("' onclick=\"return confirm('Eliminar cliente?')\">Apagar</a>");
                     html.append("</td>");
@@ -263,7 +262,7 @@ public class App {
 
         });
 
-        // LISTA PRODUTO
+        // LISTA PRODUTOS
 
         server.createContext("/produtos", exchange -> {
 
@@ -292,7 +291,7 @@ public class App {
 
                         <h2>Lista de Produtos</h2>
 
-                        <a href='/novo'>+ Novo Produto</a><br><br>
+                        <a href='/novoproduto'>+ Novo Produto</a><br><br>
 
 
                         <table>
@@ -308,7 +307,6 @@ public class App {
                             </tr>
 
                     """);
-                    
 
             Connection con = LigacaoBD.ligar();
 
@@ -395,7 +393,7 @@ public class App {
 
                         <a href='/clientes'>← Voltar à lista</a><br><br>
 
-                        <form method='POST' action='/guardar'>
+                        <form method='POST' action='/guardarcliente'>
 
                             Nome:
 
@@ -629,7 +627,7 @@ public class App {
 
                             <h2>!! Erro ao guardar cliente!</h2>
 
-                            <a href='/novo'>Voltar</a>
+                            <a href='/novocliente'>Voltar</a>
 
 
                             </body>
@@ -746,9 +744,9 @@ public class App {
 
                             <h2>:-) Produto guardado com sucesso!</h2>
 
-                            <a href='/produto'>Ver lista</a><br><br>
+                            <a href='/produtos'>Ver lista</a><br><br>
 
-                            <a href='/novo'>Inserir novo produto</a>
+                            <a href='/novoproduto'>Inserir novo produto</a>
 
                             </body>
 
@@ -775,7 +773,7 @@ public class App {
 
                             <h2>!! Erro ao guardar produto!</h2>
 
-                            <a href='/novo'>Voltar</a>
+                            <a href='/novoproduto'>Voltar</a>
 
 
                             </body>
@@ -859,7 +857,7 @@ public class App {
 
                             <a href='/clientes'>« Voltar</a><br><br>
 
-                            <form method='POST' action='/atualizar'>
+                            <form method='POST' action='/atualizarcliente'>
 
                         """);
 
@@ -973,19 +971,19 @@ public class App {
 
                             <h2>Editar Produto</h2>
 
-                            <a href='/produto'>« Voltar</a><br><br>
+                            <a href='/produtos'>« Voltar</a><br><br>
 
-                            <form method='POST' action='/atualizar'>
+                            <form method='POST' action='/atualizarproduto'>
 
                         """);
 
                 html.append("<input type='hidden' name='id' value='").append(id).append("'>");
 
-                html.append("Nome:<input name='refProduto' value='").append(refProduto).append("' required>");
+                html.append("RefProduto:<input name='refProduto' value='").append(refProduto).append("' required>");
 
-                html.append("Email:<input name='produto' value='").append(produto).append("' required>");
+                html.append("Produto:<input name='produto' value='").append(produto).append("' required>");
 
-                html.append("Telefone:<input name='preco' value='").append(preco).append("'>");
+                html.append("Preco:<input name='preco' value='").append(preco).append("'>");
 
                 html.append("""
 
@@ -1010,7 +1008,7 @@ public class App {
                             <html>
                             <body>
                             <h2>!Erro ao carregar produto</h2>
-                            <a href='/produto'>Voltar</a>
+                            <a href='/produtos'>Voltar</a>
                             </body>
                             </html>
 
@@ -1350,7 +1348,7 @@ public class App {
             exchange.close();
         });
 
-        //FORM ELIMINAR PRODUTO
+        // ELIMINAR PRODUTO
 
         server.createContext("/apagarproduto", exchange -> {
 
